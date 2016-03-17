@@ -107,7 +107,7 @@ const resolvePathname = ({ relativePath, route, routes, params }) => {
   // TODO: remove trailing slash hack
   // we add a slash cause it's SUPER WEIRD if we don't, should add an option
   // to history to always use trailing slashes to not do this and cause
-  // confustion for people who actually know how browsers resolve urls :P
+  // confusion for people who actually know how browsers resolve urls :P
   const specialCase = relativePath.trim() === ''
   const slash = specialCase ? '' : '/'
   const resolvedPattern = resolve(`${patternUpToRoute}/`, `${relativePath}${slash}`)
