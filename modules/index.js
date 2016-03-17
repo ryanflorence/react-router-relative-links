@@ -73,8 +73,13 @@ export const RelativeLinksContainer = React.createClass({
 const isAbsolute = to => to.match(/^\//)
 
 const constructRoutePattern = (route, routes) => {
-  let rootPath = null
   const paths = []
+
+  // we need to return a path that starts with `/`, at least one route
+  // in the matched routes will start with `/`, once we find it, we can
+  // just `join` the rest, when approaching other ways I kept running into
+  // issues where it returned //some/path instead of /some/path ... 
+  let rootPath = null
 
   for (let i = 0, l = routes.length; i < l; i++) {
     if (routes[i] === route) {
@@ -83,7 +88,13 @@ const constructRoutePattern = (route, routes) => {
     }
     else if (isAbsolute(routes[i].path)) {
       if (rootPath) {
-        // could be valid if it's absolute current path built up matches, but not worrying about that yet
+        // this will throw even though they may have a valid route config like:
+        //
+        // <Route path="/">
+        //   <Route path="/foo"/>
+        // </Route>
+        //
+        // but I'm just punting for now
         throw new Error('You can\'t use relative links in route configs with nested absolute route paths')
       } else {
         rootPath = routes[i].path
