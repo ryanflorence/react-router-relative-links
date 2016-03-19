@@ -43,14 +43,18 @@ const Chapter = React.createClass({
   render() {
     const { chapter } = this.props.params
     return (
-      <div>
-        <h2>Chapter {chapter}</h2>
-        <ul>
-          <li><RelativeLink to="../..">Up to Home</RelativeLink></li>
-          <li><RelativeLink to="./1">Chapter {chapter}, Page 1</RelativeLink></li>
-          <li><RelativeLink to="./2">Chapter {chapter}, Page 2</RelativeLink></li>
-        </ul>
-        {this.props.children}
+      <div style={{ display: 'flex' }}>
+        <div>
+          <h2>Chapter {chapter}</h2>
+          <ul>
+            <li><RelativeLink to="../..">Up to Home</RelativeLink></li>
+            <li><RelativeLink to="./1">Chapter {chapter}, Page 1</RelativeLink></li>
+            <li><RelativeLink to="./2">Chapter {chapter}, Page 2</RelativeLink></li>
+          </ul>
+        </div>
+        <div style={{ flex: '1', paddingLeft: '60px' }}>
+          {this.props.children}
+        </div>
       </div>
     )
   }
@@ -84,8 +88,7 @@ render((
   >
     <Route path="/" component={App}>
       <IndexRoute component={Home}/>
-      <Route path="ch/:chapter">
-        <IndexRoute component={Chapter}/>
+      <Route path="ch/:chapter" component={Chapter}>
         <Route path=":page" component={Page}/>
       </Route>
     </Route>
