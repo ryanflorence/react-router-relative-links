@@ -3,6 +3,12 @@
 This is a WIP with only a couple hours put into the code, but I think it
 works, give it a shot, send some pull requests if you run into issues.
 
+## Installation
+
+```
+npm install react-router-relative-links
+```
+
 ## Usage
 
 ```js
