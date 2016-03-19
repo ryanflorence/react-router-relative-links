@@ -23,8 +23,7 @@
   "license": "MIT",
   "peerDependencies": {
     "react": "*",
-    "react-router": "^2.0.1",
-    "url": "0.11.0"
+    "react-router": "^2.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
@@ -68,5 +67,8 @@
     "react",
     "react router",
     "relative links"
-  ]
+  ],
+  "dependencies": {
+    "resolve-pathname": "^2.0.0"
+  }
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'react-router/lib/Link'
 import { formatPattern } from 'react-router/lib/PatternUtils'
-import { resolve } from 'url'
+import resolve from 'resolve-pathname'
 
 // 1. Use this in `<Router createElement={RelativeLinks.createElement}/>`
 export const createElement = (Component, props) => (
@@ -121,7 +121,7 @@ const resolvePathname = ({ relativePath, route, routes, params }) => {
   // confusion for people who actually know how browsers resolve urls :P
   const specialCase = relativePath.trim() === ''
   const slash = specialCase ? '' : '/'
-  const resolvedPattern = resolve(`${patternUpToRoute}/`, `${relativePath}${slash}`)
+  const resolvedPattern = resolve(`${relativePath}${slash}`, `${patternUpToRoute}/`)
   const withoutSlash = resolvedPattern.substring(0, resolvedPattern.length - 1)
   return formatPattern(withoutSlash, params)
 }
