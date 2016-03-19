@@ -88,6 +88,32 @@ describe('RelativeLink', () => {
             done()
           })
         })
+
+        describe('with a location descriptor', () => {
+          it('works', (done) => {
+            const loc = { pathname: '.' }
+            run(<RelativeLink to={loc}/>, startPath, (node) => {
+              expect(node.getAttribute('href')).toEqual('/parent/reference')
+              done()
+            })
+          })
+
+          it('works with a query', (done) => {
+            const loc = { pathname: '.', query: { foo: 'bar' } }
+            run(<RelativeLink to={loc}/>, startPath, (node) => {
+              expect(node.getAttribute('href')).toEqual('/parent/reference?foo=bar')
+              done()
+            })
+          })
+
+          it('works with only a query', (done) => {
+            const loc = { query: { foo: 'bar' } }
+            run(<RelativeLink to={loc}/>, startPath, (node) => {
+              expect(node.getAttribute('href')).toEqual('/parent/reference?foo=bar')
+              done()
+            })
+          })
+        })
       }
     }
 
@@ -181,6 +207,7 @@ describe('RelativeLink', () => {
             done()
           })
         })
+
       }
     }
 

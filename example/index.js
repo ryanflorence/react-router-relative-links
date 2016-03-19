@@ -59,12 +59,18 @@ const Chapter = React.createClass({
 const Page = React.createClass({
   render() {
     const { chapter, page } = this.props.params
+    const { query } = this.props.location
     return (
       <div>
         <h2>Chapter {chapter}, Page {page}</h2>
+        <h3>Query: {query.time}</h3>
         <ul>
           <li><RelativeLink to={`../../..`}>Up to Home</RelativeLink></li>
           <li><RelativeLink to={`..`}>Up to Chapter {chapter}</RelativeLink></li>
+          <li>
+            <RelativeLink to={{ query: { time: Date.now() } }}>Change the query, plz</RelativeLink><br/>
+            You can click that a bunch, it'll change each time. This is probably the biggest reason people want relative links :)
+          </li>
         </ul>
       </div>
     )

@@ -8,7 +8,7 @@ export const createElement = (Component, props) => (
   <RelativeLinksContainer Component={Component} routerProps={props}/>
 )
 
-const { shape, object, string, func, array } = React.PropTypes
+const { oneOfType, shape, object, string, func, array } = React.PropTypes
 
 const relativeLinksContextType = {
   relativeLinks: shape({
@@ -131,7 +131,7 @@ const resolvePathname = ({ relativePath, route, routes, params }) => {
 export const RelativeLink = React.createClass({
 
   propTypes: {
-    to: string.isRequired
+    to: oneOfType([ string, object ]).isRequired
   },
 
   contextTypes: relativeLinksContextType,
@@ -150,7 +150,11 @@ export const RelativeLink = React.createClass({
   calculateTo(props) {
     const { to } = props
     const { route, routes, params } = this.context.relativeLinks
-    return isAbsolute(to) ? to : resolvePathname({ relativePath: to, route, routes, params })
+    const isLocationDescriptor = typeof to === 'object'
+    const relativePath = isLocationDescriptor ? to.pathname || '' : to
+    const resolved = isAbsolute(relativePath) ? relativePath :
+      resolvePathname({ relativePath, route, routes, params })
+    return isLocationDescriptor ? { ...to, pathname: resolved } : resolved
   },
 
   render() {
