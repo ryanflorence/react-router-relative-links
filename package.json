@@ -2,7 +2,7 @@
   "name": "react-router-relative-links",
   "version": "0.0.0",
   "description": "Name says it all",
-  "main": "lib/RelativeLinks",
+  "main": "lib/RelativeLinks.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/ryanflorence/react-router-relative-links.git"

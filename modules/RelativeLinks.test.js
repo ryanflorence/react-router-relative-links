@@ -2,7 +2,7 @@
 import React from 'react'
 import expect from 'expect'
 import { Router, Route } from 'react-router'
-import { RelativeLink, createElement } from './index'
+import { RelativeLink, createElement } from './RelativeLinks'
 import { render } from 'react-dom'
 import createHistory from 'react-router/lib/createMemoryHistory'
 

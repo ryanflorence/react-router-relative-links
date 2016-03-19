@@ -8,7 +8,7 @@ module.exports = {
   resolve: {
     alias: {
       'react-router-relative-links':
-        path.resolve(__dirname, '..', 'modules', 'index.js')
+        path.resolve(__dirname, '..', 'modules', 'RelativeLinks.js')
     }
   },
   module: {
