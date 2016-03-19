@@ -3,10 +3,11 @@ import Link from 'react-router/lib/Link'
 import { formatPattern } from 'react-router/lib/PatternUtils'
 import resolve from 'resolve-pathname'
 
-// 1. Use this in `<Router createElement={RelativeLinks.createElement}/>`
-export const createElement = (Component, props) => (
-  <RelativeLinksContainer Component={Component} routerProps={props}/>
-)
+export const useRelativeLinks = () => ({
+  renderContainer: (Component, props) => (
+    <RelativeLinksContainer Component={Component} routerProps={props}/>
+  )
+})
 
 const { oneOfType, shape, object, string, func, array } = React.PropTypes
 
@@ -18,11 +19,7 @@ const relativeLinksContextType = {
   }).isRequired
 }
 
-
-// 2. the library renders route components with some extra context
-//    particularly, the route the component that it's assigned to
-//    and params
-export const RelativeLinksContainer = React.createClass({
+const RelativeLinksContainer = React.createClass({
 
   propTypes: {
     Component: func.isRequired,
@@ -30,31 +27,6 @@ export const RelativeLinksContainer = React.createClass({
       route: object.isRequired,
       params: object.isRequired
     }).isRequired
-  },
-
-  getDefaultProps() {
-    /* Normal usage is:
-    ```js
-    <Router createElement={relativeLinksCreateElement}/>
-    ```
-
-    This goofy prop lets "createElement" abstractions compose like:
-
-    ```js
-    <Router createElement={(Component, props) => (
-      <AsyncPropsContainer
-        Component={Component}
-        routerProps={props}
-        createElement={(Component, props) => (
-          <RelativeLinksContainer Component={Component} routerProps={props}/>
-        )}
-      />
-    )}/>
-    ```
-    */
-    return {
-      createElement: (Component, props) => <Component {...props}/>
-    }
   },
 
   childContextTypes: relativeLinksContextType,
@@ -65,7 +37,8 @@ export const RelativeLinksContainer = React.createClass({
   },
 
   render() {
-    return this.props.createElement(this.props.Component, this.props.routerProps)
+    const { createElement, Component, routerProps } = this.props
+    return createElement(Component, routerProps)
   }
 
 })
@@ -126,8 +99,6 @@ const resolvePathname = ({ relativePath, route, routes, params }) => {
   return formatPattern(withoutSlash, params)
 }
 
-
-// 3. Use a `<RelativeLink to="somewhere/relative"/>`
 export const RelativeLink = React.createClass({
 
   propTypes: {
@@ -137,7 +108,6 @@ export const RelativeLink = React.createClass({
   contextTypes: relativeLinksContextType,
 
   getInitialState() {
-    // gonna cache this for the perfs
     return { to: this.calculateTo(this.props) }
   },
 

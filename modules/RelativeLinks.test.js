@@ -2,9 +2,10 @@
 import React from 'react'
 import expect from 'expect'
 import { Router, Route } from 'react-router'
-import { RelativeLink, createElement } from './RelativeLinks'
+import { RelativeLink, useRelativeLinks } from './RelativeLinks'
 import { render } from 'react-dom'
 import createHistory from 'react-router/lib/createMemoryHistory'
+import applyRouterMiddleware from 'react-router-apply-middleware'
 
 describe('RelativeLink', () => {
 
@@ -45,7 +46,7 @@ describe('RelativeLink', () => {
 
       render((
         <Router
-          createElement={createElement}
+          render={applyRouterMiddleware(useRelativeLinks())}
           routes={routes}
           history={createHistory(initialPath)}
         />
@@ -157,7 +158,7 @@ describe('RelativeLink', () => {
 
       render((
         <Router
-          createElement={createElement}
+          render={applyRouterMiddleware(useRelativeLinks())}
           routes={routes}
           history={createHistory(initialPath)}
         />

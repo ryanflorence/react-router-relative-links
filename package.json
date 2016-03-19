@@ -23,7 +23,8 @@
   "license": "MIT",
   "peerDependencies": {
     "react": "*",
-    "react-router": "^2.0.1"
+    "react-router": "^2.0.1",
+    "react-router-apply-middleware": "^0.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
@@ -54,6 +55,7 @@
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
     "react-router": "^2.0.1",
+    "react-router-apply-middleware": "0.0.2",
     "rimraf": "^2.4.2",
     "webpack": "^1.12.6",
     "webpack-dev-middleware": "^1.2.0"

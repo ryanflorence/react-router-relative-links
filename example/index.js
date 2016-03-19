@@ -1,11 +1,8 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router'
-
-import {
-  createElement as relativeLinksCreateElement,
-  RelativeLink
-} from 'react-router-relative-links'
+import { useRelativeLinks, RelativeLink } from 'react-router-relative-links'
+import applyRouterMiddleware from 'react-router-apply-middleware'
 
 const App = React.createClass({
   render() {
@@ -84,7 +81,7 @@ const Page = React.createClass({
 render((
   <Router
     history={browserHistory}
-    createElement={relativeLinksCreateElement}
+    render={applyRouterMiddleware(useRelativeLinks())}
   >
     <Route path="/" component={App}>
       <IndexRoute component={Home}/>
