@@ -69,7 +69,7 @@ const Page = React.createClass({
           <li><RelativeLink to={`..`}>Up to Chapter {chapter}</RelativeLink></li>
           <li>
             <RelativeLink to={{ query: { time: Date.now() } }}>Change the query, plz</RelativeLink><br/>
-            You can click that a bunch, it'll change each time. This is probably the biggest reason people want relative links :)
+            You can click that a bunch, it’ll change each time. This is probably the biggest reason people want relative links :)
           </li>
         </ul>
       </div>
