@@ -45,45 +45,31 @@ const RelativeLinksContainer = React.createClass({
 
 const isAbsolute = to => to.match(/^\//)
 
-const constructRoutePattern = (route, routes) => {
-  const paths = []
+const constructRoutePattern = (currentRoute, routes) => {
+  let fullPath = ''
 
-  // we need to return a path that starts with `/`, at least one route
-  // in the matched routes will start with `/`, once we find it, we can
-  // just `join` the rest, when approaching other ways I kept running into
-  // issues where it returned //some/path instead of /some/path ... 
-  let rootPath = null
+  for (const route of routes) {
+    const { path } = route
 
-  for (let i = 0, l = routes.length; i < l; i++) {
-    if (routes[i] === route) {
-      // we're done, we made it to our route, the rest are irrelevant
-      break
-    }
-    else if (isAbsolute(routes[i].path)) {
-      if (rootPath) {
-        // this will throw even though they may have a valid route config like:
-        //
-        // <Route path="/">
-        //   <Route path="/foo"/>
-        // </Route>
-        //
-        // but I'm just punting for now
-        throw new Error('You can\'t use relative links in route configs with nested absolute route paths')
+    if (path) {
+      if (path[0] === '/') {
+        fullPath = path
       } else {
-        rootPath = routes[i].path
+        // If the first path-ed route has no leading slash, then this will add it.
+        if (fullPath[fullPath.length - 1] !== '/') {
+          fullPath += '/'
+        }
+
+        fullPath += path
       }
     }
-    else if (routes[i].path) {
-      paths.push(routes[i].path)
+
+    if (route === currentRoute) {
+      break
     }
   }
 
-
-  if (route.path)
-    paths.push(route.path)
-
-  const childPath = paths.join('/')
-  return rootPath === '/' ? `/${childPath}` : `${rootPath}/${childPath}`
+  return fullPath
 }
 
 const resolvePathname = ({ relativePath, route, routes, params }) => {
