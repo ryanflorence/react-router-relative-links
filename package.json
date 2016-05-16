@@ -1,6 +1,6 @@
 {
   "name": "react-router-relative-links",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Name says it all",
   "main": "lib/RelativeLinks.js",
   "repository": {
@@ -24,7 +24,8 @@
   "peerDependencies": {
     "react": "*",
     "react-router": "^2.0.1",
-    "react-router-apply-middleware": "^0.0.2"
+    "react-router-apply-middleware": "^0.0.2",
+    "react-router-route-props-context": "^1.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
@@ -56,6 +57,7 @@
     "react-dom": "^0.14.2",
     "react-router": "^2.0.1",
     "react-router-apply-middleware": "0.0.2",
+    "react-router-route-props-context": "^1.0.0",
     "rimraf": "^2.4.2",
     "webpack": "^1.12.6",
     "webpack-dev-middleware": "^1.2.0"
