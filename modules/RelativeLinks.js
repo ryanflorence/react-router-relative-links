@@ -3,45 +3,7 @@ import Link from 'react-router/lib/Link'
 import { formatPattern } from 'react-router/lib/PatternUtils'
 import resolve from 'resolve-pathname'
 
-export const useRelativeLinks = () => ({
-  renderContainer: (Component, props) => (
-    <RelativeLinksContainer Component={Component} routerProps={props}/>
-  )
-})
-
-const { oneOfType, shape, object, string, func, array } = React.PropTypes
-
-const relativeLinksContextType = {
-  relativeLinks: shape({
-    params: object.isRequired,
-    route: object.isRequired,
-    routes: array.isRequired
-  }).isRequired
-}
-
-const RelativeLinksContainer = React.createClass({
-
-  propTypes: {
-    Component: func.isRequired,
-    routerProps: shape({
-      route: object.isRequired,
-      params: object.isRequired
-    }).isRequired
-  },
-
-  childContextTypes: relativeLinksContextType,
-
-  getChildContext() {
-    const { params, routes, route } = this.props.routerProps
-    return { relativeLinks: { params, route, routes } }
-  },
-
-  render() {
-    const { createElement, Component, routerProps } = this.props
-    return createElement(Component, routerProps)
-  }
-
-})
+const { oneOfType, object, string } = React.PropTypes
 
 const isAbsolute = to => to.match(/^\//)
 
@@ -91,7 +53,9 @@ export const RelativeLink = React.createClass({
     to: oneOfType([ string, object ]).isRequired
   },
 
-  contextTypes: relativeLinksContextType,
+  contextTypes: {
+    routeProps: object.isRequired
+  },
 
   getInitialState() {
     return { to: this.calculateTo(this.props) }
@@ -105,7 +69,7 @@ export const RelativeLink = React.createClass({
 
   calculateTo(props) {
     const { to } = props
-    const { route, routes, params } = this.context.relativeLinks
+    const { route, routes, params } = this.context.routeProps
     const isLocationDescriptor = typeof to === 'object'
     const relativePath = isLocationDescriptor ? to.pathname || '' : to
     const resolved = isAbsolute(relativePath) ? relativePath :
