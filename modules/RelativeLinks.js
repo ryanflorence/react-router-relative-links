@@ -4,12 +4,12 @@ import { formatPattern } from 'react-router/lib/PatternUtils'
 import resolve from 'resolve-pathname'
 
 export const useRelativeLinks = () => ({
-  renderContainer: (Component, props) => (
-    <RelativeLinksContainer Component={Component} routerProps={props}/>
+  renderRouteComponent: (child, routeProps) => (
+    <RelativeLinksContainer routeProps={routeProps}>{child}</RelativeLinksContainer>
   )
 })
 
-const { oneOfType, shape, object, string, func, array } = React.PropTypes
+const { oneOfType, shape, object, string, func, array, node } = React.PropTypes
 
 const relativeLinksContextType = {
   relativeLinks: shape({
@@ -23,7 +23,8 @@ const RelativeLinksContainer = React.createClass({
 
   propTypes: {
     Component: func.isRequired,
-    routerProps: shape({
+    children: node.isRequired,
+    routeProps: shape({
       route: object.isRequired,
       params: object.isRequired
     }).isRequired
@@ -32,13 +33,12 @@ const RelativeLinksContainer = React.createClass({
   childContextTypes: relativeLinksContextType,
 
   getChildContext() {
-    const { params, routes, route } = this.props.routerProps
+    const { params, routes, route } = this.props.routeProps
     return { relativeLinks: { params, route, routes } }
   },
 
   render() {
-    const { createElement, Component, routerProps } = this.props
-    return createElement(Component, routerProps)
+    return this.props.children
   }
 
 })
