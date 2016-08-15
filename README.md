@@ -6,17 +6,17 @@ works, give it a shot, send some pull requests if you run into issues.
 ## Installation
 
 ```
-npm install react-router-relative-links react-router-apply-middleware
+npm install react-router-relative-links
 ```
 
 ## Usage
 
 ```js
-import applyMiddleware from 'react-router-apply-middleware'
+import { applyRouterMiddleware } from 'react-router'
 import { useRelativeLinks, RelativeLink } from 'react-router-relative-links'
 
 // use it like other router middleware
-<Router render={applyMiddleware(useRelativeLinks())}/>
+<Router render={applyRouterMiddleware(useRelativeLinks())}/>
 
 // now you can use `RelativeLink` anywhere \o/
 <RelativeLink to="../">Up</RelativeLink>
