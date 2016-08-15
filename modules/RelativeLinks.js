@@ -9,7 +9,7 @@ export const useRelativeLinks = () => ({
   )
 })
 
-const { oneOfType, shape, object, string, func, array } = React.PropTypes
+const { oneOfType, shape, object, string, func, array, node } = React.PropTypes
 
 const relativeLinksContextType = {
   relativeLinks: shape({
@@ -23,6 +23,7 @@ const RelativeLinksContainer = React.createClass({
 
   propTypes: {
     Component: func.isRequired,
+    children: node.isRequired,
     routeProps: shape({
       route: object.isRequired,
       params: object.isRequired
