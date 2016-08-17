@@ -37,8 +37,8 @@ const RelativeLinksContainer = React.createClass({
   },
 
   render() {
-    const { createElement, Component, routerProps } = this.props
-    return createElement(Component, routerProps)
+    const { createElement, Component, routerProps, ...props } = this.props
+    return createElement(Component, { ...routerProps, ...props })
   }
 
 })
